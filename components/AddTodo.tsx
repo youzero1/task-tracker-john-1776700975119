@@ -1,12 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, RefObject } from 'react';
 
 interface AddTodoProps {
   onAdd: (text: string) => void;
+  inputRef?: RefObject<HTMLInputElement>;
 }
 
-export default function AddTodo({ onAdd }: AddTodoProps) {
+export default function AddTodo({ onAdd, inputRef }: AddTodoProps) {
   const [value, setValue] = useState('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,10 +21,11 @@ export default function AddTodo({ onAdd }: AddTodoProps) {
   return (
     <form onSubmit={handleSubmit} className="flex gap-3">
       <input
+        ref={inputRef}
         type="text"
         value={value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
-        placeholder="Add a new task..."
+        placeholder="Add a new task... (press N to focus)"
         className="flex-1 bg-gray-50 rounded-xl px-4 py-3 text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-violet-400 focus:bg-white transition-all duration-200 text-sm"
       />
       <button
